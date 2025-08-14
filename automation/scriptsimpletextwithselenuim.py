@@ -7,6 +7,8 @@ def clean_text(text):
 # this lines used to make scrip easier
 def get_driver(URL):
     options = webdriver.ChromeOptions()
+    options.add_argument("--headless")           # Run in headless mode (no UI)
+    options.add_argument("--disable-gpu")
     options.add_argument("disable-infobars")
     options.add_argument("start-maximized")
     options.add_argument("disable-dev-shm-usage")
@@ -20,7 +22,9 @@ def get_driver(URL):
 
 def main():
     driver = get_driver(URL)
-    element = driver.find_element(by="xpath", value="/html/body/div[6]/div[2]/div/div[1]/div[2]")
-    return clean_text(element.text)
+    time.sleep(10)
+    element = driver.find_element(by="xpath", value="/html/body/main/div[3]/div/div[3]/div/div/div[16]/div[3]/h3/a")
+    return element.text
 
-print(main())
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write(main())
